@@ -10,15 +10,18 @@ import {
 } from 'react-native';
 
 export default function SignIn() {
-    const { user } = useContext(AuthContext);
+    const { user, signIn } = useContext(AuthContext);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    function handleLogin() {
+    async function handleLogin() {
+
         if (email === '' || password === '') {
             return;
         }
+
+        await signIn({ email, password });
     }
 
     return (
@@ -27,7 +30,7 @@ export default function SignIn() {
                 style={styles.logo}
                 source={require('../../assets/logo.png')}
             />
-            
+
             <View style={styles.inputContainer}>
                 <TextInput
                     placeholder='Digite seu e-mail'

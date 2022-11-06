@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { StackParamsList } from '../../routes/app.routes';
 
 import { Feather } from '@expo/vector-icons';
 
@@ -47,7 +49,7 @@ type OrderRouteProps = RouteProp<RouteDetailParams, 'Order'>;
 
 export default function Order() {
     const route = useRoute<OrderRouteProps>();
-    const navigation = useNavigation();
+    const navigation = useNavigation<NativeStackNavigationProp<StackParamsList>>();
 
     const [category, setCategory] = useState<CategoryProps[] | []>([]);
     const [categorySelected, setCategorySelected] = useState<CategoryProps>();
@@ -139,6 +141,10 @@ export default function Order() {
         setItems(removeItem);
     }
 
+    function handleFinishOrder() {
+        navigation.navigate('FinishOrder');
+    }
+
     return (
         <View style={styles.container}>
 
@@ -185,7 +191,7 @@ export default function Order() {
 
                 <TouchableOpacity style={[styles.button, { opacity: items.length === 0 ? 0.3 : 1 }]}
                     disabled={items.length === 0}>
-                    <Text style={styles.buttonText}>Avançar</Text>
+                    <Text style={styles.buttonText} onPress={handleFinishOrder}>Avançar</Text>
                 </TouchableOpacity>
             </View>
 
